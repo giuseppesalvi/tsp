@@ -1,3 +1,7 @@
+"""
+    tsp solution using 2-opt search algorithm
+    https://pypi.org/project/py2opt/
+"""
 # Copyright © 2021 Giovanni Squillero <squillero@polito.it>
 # Free for personal or classroom use; see 'LICENCE.md' for details.
 # https://github.com/squillero/computational-intelligence
@@ -11,7 +15,7 @@ import matplotlib.pyplot as plt
 from py2opt.routefinder import RouteFinder
 
 
-NUM_CITIES = 23 
+NUM_CITIES = 23
 STEADY_STATE = 1000
 
 
@@ -32,7 +36,7 @@ class Tsp:
             distances = []
             for d in range(num_cities):
                 # if d != c:
-                distances.append(self.distance(c,d))
+                distances.append(self.distance(c, d))
             self.dist_mat.append(distances)
 
     def distance(self, n1, n2) -> int:
@@ -80,6 +84,7 @@ def tweak(solution: np.array, *, pm: float = .1) -> np.array:
         p = np.random.random()
     return new_solution
 
+
 def main():
 
     problem = Tsp(NUM_CITIES)
@@ -91,16 +96,17 @@ def main():
     print("first random solution")
     print(f"solution cost: {solution_cost}")
 
-    route_finder = RouteFinder(problem.dist_mat, problem.cities_names, iterations=5)
+    route_finder = RouteFinder(
+        problem.dist_mat, problem.cities_names, iterations=5)
     solution_cost, solution = route_finder.solve()
 
     problem.plot(np.array(solution))
     print("best solution")
     print(f"solution cost: {solution_cost}")
 
+
 if __name__ == '__main__':
     logging.basicConfig(
         format='[%(asctime)s] %(levelname)s: %(message)s', datefmt='%H:%M:%S')
     logging.getLogger().setLevel(level=logging.INFO)
     main()
-
