@@ -113,11 +113,11 @@ def main():
 
     # more iterations: better solution
     route_finder = RouteFinder(
-        problem.dist_mat, problem.cities_names, iterations=50)
+        problem.dist_mat, problem.cities_names, iterations=100)
     solution_cost, solution = route_finder.solve()
 
     problem.plot(np.array(solution))
-    print("best solution using 50 iterations")
+    print("best solution using 100 iterations")
     print(f"solution cost: {solution_cost}")
 
 
