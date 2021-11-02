@@ -90,15 +90,9 @@ def main():
     problem.plot(solution)
 
     route_finder = RouteFinder(problem.dist_mat, problem.cities_names, iterations=5)
-    best_distance, best_route = route_finder.solve()
+    solution_cost, solution = route_finder.solve()
 
-    print(best_distance)
-    print(best_route)
-
-    # construct solution from best route
-    solution = np.array(best_route)
-
-    problem.plot(solution)
+    problem.plot(np.array(solution))
     print(f"solution cost: {solution_cost}")
 
 
