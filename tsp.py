@@ -99,12 +99,13 @@ def main():
     print("first random solution")
     print(f"solution cost: {solution_cost}")
 
+    # try to find the best solution using py2opt algorithm
     route_finder = RouteFinder(
         problem.dist_mat, problem.cities_names, iterations=5)
     solution_cost, solution = route_finder.solve()
 
     problem.plot(np.array(solution))
-    print("best solution")
+    print("best solution using 5 iterations")
     print(f"solution cost: {solution_cost}")
 
     # more iterations: better solution
@@ -113,7 +114,7 @@ def main():
     solution_cost, solution = route_finder.solve()
 
     problem.plot(np.array(solution))
-    print("best solution")
+    print("best solution using 50 iterations")
     print(f"solution cost: {solution_cost}")
 
 
