@@ -107,6 +107,15 @@ def main():
     print("best solution")
     print(f"solution cost: {solution_cost}")
 
+    # more iterations: better solution
+    route_finder = RouteFinder(
+        problem.dist_mat, problem.cities_names, iterations=50)
+    solution_cost, solution = route_finder.solve()
+
+    problem.plot(np.array(solution))
+    print("best solution")
+    print(f"solution cost: {solution_cost}")
+
 
 if __name__ == '__main__':
     logging.basicConfig(
