@@ -26,7 +26,7 @@ class Tsp:
         for c in range(num_cities):
             self._graph.add_node(
                 c, pos=(np.random.random(), np.random.random()))
-        self.cities_names = ["city_" + str(idx) for idx,c in enumerate(range(num_cities))]
+        self.cities_names = [str(idx) for idx,c in enumerate(range(num_cities))]
         # self.dist_mat = [[0, 29, 15, 35], [29, 0, 57, 42], [15, 57, 0, 61], [35, 42, 61, 0]]
         self.dist_mat = []
         for c in range(num_cities):
@@ -81,7 +81,6 @@ def tweak(solution: np.array, *, pm: float = .1) -> np.array:
         p = np.random.random()
     return new_solution
 
-
 def main():
 
     problem = Tsp(NUM_CITIES)
@@ -109,8 +108,20 @@ def main():
 
     route_finder = RouteFinder(problem.dist_mat, problem.cities_names, iterations=5)
     best_distance, best_route = route_finder.solve()
+
     print(best_distance)
     print(best_route)
+
+    # construct solution from best route
+    solution = []
+    for c in best_route:
+        solution.append(int(c))
+    solution = np.array(solution)
+
+    problem.plot(solution)
+    print(f"solution cost: {solution_cost}")
+
+
 
 
 if __name__ == '__main__':
