@@ -88,15 +88,15 @@ def main():
     np.random.shuffle(solution)
     solution_cost = problem.evaluate_solution(solution)
     problem.plot(solution)
+    print("first random solution")
+    print(f"solution cost: {solution_cost}")
 
     route_finder = RouteFinder(problem.dist_mat, problem.cities_names, iterations=5)
     solution_cost, solution = route_finder.solve()
 
     problem.plot(np.array(solution))
+    print("best solution")
     print(f"solution cost: {solution_cost}")
-
-
-
 
 if __name__ == '__main__':
     logging.basicConfig(
