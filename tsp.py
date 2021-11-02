@@ -30,12 +30,15 @@ class Tsp:
         for c in range(num_cities):
             self._graph.add_node(
                 c, pos=(np.random.random(), np.random.random()))
+
+        # initialize vector with names of the cities, in this case numbers
         self.cities_names = [i for i in range(num_cities)]
+        # initialize matrix of distances between cities
         self.dist_mat = []
+
         for c in range(num_cities):
             distances = []
             for d in range(num_cities):
-                # if d != c:
                 distances.append(self.distance(c, d))
             self.dist_mat.append(distances)
 
