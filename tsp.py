@@ -8,8 +8,10 @@ from typing import Any
 import numpy as np
 import networkx as nx
 import matplotlib.pyplot as plt
+from py2opt.routefinder import RouteFinder
 
-NUM_CITIES = 23
+
+NUM_CITIES = 23 
 STEADY_STATE = 1000
 
 
@@ -22,7 +24,17 @@ class Tsp:
         self._graph = nx.DiGraph()
         np.random.seed(seed)
         for c in range(num_cities):
-            self._graph.add_node(c, pos=(np.random.random(), np.random.random()))
+            self._graph.add_node(
+                c, pos=(np.random.random(), np.random.random()))
+        self.cities_names = ["city_" + str(idx) for idx,c in enumerate(range(num_cities))]
+        # self.dist_mat = [[0, 29, 15, 35], [29, 0, 57, 42], [15, 57, 0, 61], [35, 42, 61, 0]]
+        self.dist_mat = []
+        for c in range(num_cities):
+            distances = []
+            for d in range(num_cities):
+                # if d != c:
+                distances.append(self.distance(c,d))
+            self.dist_mat.append(distances)
 
     def distance(self, n1, n2) -> int:
         pos1 = self._graph.nodes[n1]['pos']
@@ -79,23 +91,31 @@ def main():
     solution_cost = problem.evaluate_solution(solution)
     problem.plot(solution)
 
-    history = [(0, solution_cost)]
-    steady_state = 0
-    step = 0
-    while steady_state < STEADY_STATE:
-        step += 1
-        steady_state += 1
-        new_solution = tweak(solution, pm=.5)
-        new_solution_cost = problem.evaluate_solution(new_solution)
-        if new_solution_cost < solution_cost:
-            solution = new_solution
-            solution_cost = new_solution_cost
-            history.append((step, solution_cost))
-            steady_state = 0
-    problem.plot(solution)
+    # history = [(0, solution_cost)]
+    # steady_state = 0
+    # step = 0
+    # while steady_state < STEADY_STATE:
+    #     step += 1
+    #     steady_state += 1
+    #     new_solution = tweak(solution, pm=.5)
+    #     new_solution_cost = problem.evaluate_solution(new_solution)
+    #     if new_solution_cost < solution_cost:
+    #         solution = new_solution
+    #         solution_cost = new_solution_cost
+    #         history.append((step, solution_cost))
+    #         steady_state = 0
+    # problem.plot(solution)
+    # print(f"solution cost: {solution_cost}")
+
+    route_finder = RouteFinder(problem.dist_mat, problem.cities_names, iterations=5)
+    best_distance, best_route = route_finder.solve()
+    print(best_distance)
+    print(best_route)
 
 
 if __name__ == '__main__':
-    logging.basicConfig(format='[%(asctime)s] %(levelname)s: %(message)s', datefmt='%H:%M:%S')
+    logging.basicConfig(
+        format='[%(asctime)s] %(levelname)s: %(message)s', datefmt='%H:%M:%S')
     logging.getLogger().setLevel(level=logging.INFO)
     main()
+
