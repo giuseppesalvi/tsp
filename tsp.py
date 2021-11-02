@@ -26,8 +26,7 @@ class Tsp:
         for c in range(num_cities):
             self._graph.add_node(
                 c, pos=(np.random.random(), np.random.random()))
-        self.cities_names = [str(idx) for idx,c in enumerate(range(num_cities))]
-        # self.dist_mat = [[0, 29, 15, 35], [29, 0, 57, 42], [15, 57, 0, 61], [35, 42, 61, 0]]
+        self.cities_names = [i for i in range(num_cities)]
         self.dist_mat = []
         for c in range(num_cities):
             distances = []
@@ -90,22 +89,6 @@ def main():
     solution_cost = problem.evaluate_solution(solution)
     problem.plot(solution)
 
-    # history = [(0, solution_cost)]
-    # steady_state = 0
-    # step = 0
-    # while steady_state < STEADY_STATE:
-    #     step += 1
-    #     steady_state += 1
-    #     new_solution = tweak(solution, pm=.5)
-    #     new_solution_cost = problem.evaluate_solution(new_solution)
-    #     if new_solution_cost < solution_cost:
-    #         solution = new_solution
-    #         solution_cost = new_solution_cost
-    #         history.append((step, solution_cost))
-    #         steady_state = 0
-    # problem.plot(solution)
-    # print(f"solution cost: {solution_cost}")
-
     route_finder = RouteFinder(problem.dist_mat, problem.cities_names, iterations=5)
     best_distance, best_route = route_finder.solve()
 
@@ -113,10 +96,7 @@ def main():
     print(best_route)
 
     # construct solution from best route
-    solution = []
-    for c in best_route:
-        solution.append(int(c))
-    solution = np.array(solution)
+    solution = np.array(best_route)
 
     problem.plot(solution)
     print(f"solution cost: {solution_cost}")
