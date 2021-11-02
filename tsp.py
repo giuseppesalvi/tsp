@@ -2,6 +2,8 @@
     solution by Giuseppe Salvi s287583
     tsp solution using 2-opt search algorithm
     https://pypi.org/project/py2opt/
+    2-opt is a simple local search algorithm with a special swapping mechanism that suits
+    well to solve the traveling salesman problem
 """
 # Copyright © 2021 Giovanni Squillero <squillero@polito.it>
 # Free for personal or classroom use; see 'LICENCE.md' for details.
